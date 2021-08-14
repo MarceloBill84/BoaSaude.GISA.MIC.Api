@@ -24,10 +24,9 @@ namespace BoaSaude.GISA.MIC.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetUserInfo()
 		{
-
-			//var info = await _getUserInfoAppService.Execute();
-			//return Ok(info);
-			return Ok();
+			var login = HttpContext.User.Identity.Name;
+			var info = await _getUserInfoAppService.Execute(login);
+			return Ok(info);
 		}
 	}
 }
