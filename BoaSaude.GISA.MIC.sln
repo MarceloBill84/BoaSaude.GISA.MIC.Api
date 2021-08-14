@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31605.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.Api", "BoaSaude.GISA.MIC.Api\BoaSaude.GISA.MIC.Api.csproj", "{27CBE82F-7C40-4F30-B98A-BBB1BA75A4C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.Application", "BoaSaude.GISA.MIC.Application\BoaSaude.GISA.MIC.Application.csproj", "{4D3B1BAB-B736-4C45-B332-3E7310792AF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.CrossCutting", "BoaSaude.GISA.MIC.CrossCutting\BoaSaude.GISA.MIC.CrossCutting.csproj", "{5662D6B3-0082-4B44-B38C-99A562D33889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.IoC", "BoaSaude.GISA.MIC.IoC\BoaSaude.GISA.MIC.IoC.csproj", "{B06DDFB4-9D6E-4EEA-9CB5-BBD3AAE3A783}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.Domain", "BoaSaude.GISA.MIC.Domain\BoaSaude.GISA.MIC.Domain.csproj", "{FF730857-30A1-436C-9884-6D23ED07DCB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoaSaude.GISA.MIC.Infra", "BoaSaude.GISA.MIC.Infra\BoaSaude.GISA.MIC.Infra.csproj", "{B5471A12-DE7E-47D6-B062-0AF4B235E302}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27CBE82F-7C40-4F30-B98A-BBB1BA75A4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CBE82F-7C40-4F30-B98A-BBB1BA75A4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CBE82F-7C40-4F30-B98A-BBB1BA75A4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CBE82F-7C40-4F30-B98A-BBB1BA75A4C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3B1BAB-B736-4C45-B332-3E7310792AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3B1BAB-B736-4C45-B332-3E7310792AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3B1BAB-B736-4C45-B332-3E7310792AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3B1BAB-B736-4C45-B332-3E7310792AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5662D6B3-0082-4B44-B38C-99A562D33889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5662D6B3-0082-4B44-B38C-99A562D33889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5662D6B3-0082-4B44-B38C-99A562D33889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5662D6B3-0082-4B44-B38C-99A562D33889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06DDFB4-9D6E-4EEA-9CB5-BBD3AAE3A783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06DDFB4-9D6E-4EEA-9CB5-BBD3AAE3A783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06DDFB4-9D6E-4EEA-9CB5-BBD3AAE3A783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06DDFB4-9D6E-4EEA-9CB5-BBD3AAE3A783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF730857-30A1-436C-9884-6D23ED07DCB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF730857-30A1-436C-9884-6D23ED07DCB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF730857-30A1-436C-9884-6D23ED07DCB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF730857-30A1-436C-9884-6D23ED07DCB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5471A12-DE7E-47D6-B062-0AF4B235E302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5471A12-DE7E-47D6-B062-0AF4B235E302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5471A12-DE7E-47D6-B062-0AF4B235E302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5471A12-DE7E-47D6-B062-0AF4B235E302}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25EF8551-410A-40C5-BBD9-C02E50179EC9}
+	EndGlobalSection
+EndGlobal

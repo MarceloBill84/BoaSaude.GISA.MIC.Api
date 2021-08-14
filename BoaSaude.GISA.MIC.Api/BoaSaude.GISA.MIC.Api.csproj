@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>5162f405-81f4-4e97-ba4b-11e76aab0ea5</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoaSaude.GISA.MIC.Application\BoaSaude.GISA.MIC.Application.csproj" />
+    <ProjectReference Include="..\BoaSaude.GISA.MIC.CrossCutting\BoaSaude.GISA.MIC.CrossCutting.csproj" />
+    <ProjectReference Include="..\BoaSaude.GISA.MIC.Domain\BoaSaude.GISA.MIC.Domain.csproj" />
+    <ProjectReference Include="..\BoaSaude.GISA.MIC.Infra\BoaSaude.GISA.MIC.Infra.csproj" />
+    <ProjectReference Include="..\BoaSaude.GISA.MIC.IoC\BoaSaude.GISA.MIC.IoC.csproj" />
+  </ItemGroup>
+
+</Project>
