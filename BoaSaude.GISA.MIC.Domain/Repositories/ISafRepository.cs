@@ -5,6 +5,6 @@ namespace BoaSaude.GISA.MIC.Domain.Repositories
 {
 	public interface ISafRepository
 	{
-		Task<UserInfoModel> GetUserInfo();
+		Task<UserInfoModel> GetUserInfo(string login);
 	}
 }

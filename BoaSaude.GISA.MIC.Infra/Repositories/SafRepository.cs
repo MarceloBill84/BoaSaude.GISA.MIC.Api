@@ -6,7 +6,7 @@ namespace BoaSaude.GISA.MIC.Infra.Repositories
 {
 	public class SafRepository : ISafRepository
 	{
-		public async Task<UserInfoModel> GetUserInfo()
+		public async Task<UserInfoModel> GetUserInfo(string login)
 		{
 			return new UserInfoModel
 			{
