@@ -1,8 +1,10 @@
 using BoaSaude.GISA.MIC.Domain.Models;
+using BoaSaude.GISA.MIC.Infra;
 using BoaSaude.GISA.MIC.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,9 +27,18 @@ namespace BoaSaude.GISA.MIC
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<MicContext>(p => p.UseSqlServer(Configuration.GetConnectionString("MICDB")));
+			services.AddScoped<MicContext, MicContext>();
+
 			var applicationConfig = new ApplicationConfig
 			{
-				JwtSecret = Configuration.GetValue<string>("JwtSecret")
+				JwtSecret = Configuration.GetValue<string>("JwtSecret"),
+				MessageBrokerConfig = new()
+				{
+					HostName = Configuration.GetValue<string>("RabbitMQ:HostName"),
+					UserName = Configuration.GetValue<string>("RabbitMQ:UserName"),
+					Password = Configuration.GetValue<string>("RabbitMQ:Password")
+				}
 			};
 
 			var key = Encoding.ASCII.GetBytes(applicationConfig.JwtSecret);
@@ -101,6 +112,7 @@ namespace BoaSaude.GISA.MIC
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BoaSaude.GISA.MIC v1"));
 			}
 
+			app.UseCors("MyPolicy");
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
