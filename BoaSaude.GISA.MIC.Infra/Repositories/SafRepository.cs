@@ -10,6 +10,7 @@ namespace BoaSaude.GISA.MIC.Infra.Repositories
 		{
 			return new UserInfoModel
 			{
+				CpfCnpj = "72617224058",
 				Name = "Marcelo J. S.",
 				Company = "Laborátorio Saúde em Dia"
 			};

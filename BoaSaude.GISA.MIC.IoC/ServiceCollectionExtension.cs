@@ -11,7 +11,8 @@ namespace BoaSaude.GISA.MIC.IoC
 		public static IServiceCollection RegisterRepositories(this IServiceCollection services)
 		{
 			services.AddScoped<ISafRepository, SafRepository>()
-				.AddScoped<IMessageBrokerRepository, MessageBrokerRepository>();
+				.AddScoped<IMessageBrokerRepository, MessageBrokerRepository>()
+				.AddScoped<IProviderUpdateRepository, ProviderUpdateRepository>();
 
 			return services;
 		}
@@ -25,6 +26,7 @@ namespace BoaSaude.GISA.MIC.IoC
 		{
 			services.AddScoped<IGetUserInfoAppService, GetUserInfoAppService>()
 				.AddScoped<IProviderUpdateAppService, ProviderUpdateAppService>();
+
 			return services;
 		}
 	}

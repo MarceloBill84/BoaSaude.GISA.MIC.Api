@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BoaSaude.GISA.MIC.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoaSaude.GISA.MIC.Infra
 {
@@ -8,5 +9,7 @@ namespace BoaSaude.GISA.MIC.Infra
 		{
 
 		}
+		public DbSet<ProviderUpdate> ProviderUpdate { get; set; }
+		public DbSet<ProviderAddress> ProviderAddress { get; set; }
 	}
 }

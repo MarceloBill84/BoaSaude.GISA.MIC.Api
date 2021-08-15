@@ -21,6 +21,7 @@ namespace BoaSaude.GISA.MIC.Api.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update([FromBody] ProviderUpdateViewModel providerUpdateViewModel)
 		{
+			providerUpdateViewModel.Login = HttpContext.User.Identity.Name;
 			await _providerUpdateAppService.Execute(providerUpdateViewModel);
 			return NoContent();
 		}
