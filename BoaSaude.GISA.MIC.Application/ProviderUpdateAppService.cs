@@ -74,7 +74,7 @@ namespace BoaSaude.GISA.MIC.Application
 				providerUpdate.Address.Street = providerUpdateViewModel.Address.Street;
 				providerUpdate.Address.ZipCode = providerUpdateViewModel.Address.ZipCode;
 
-				_providerUpdateRepository.Update(providerUpdate);
+				await _providerUpdateRepository.Update(providerUpdate);
 			}
 		}
 

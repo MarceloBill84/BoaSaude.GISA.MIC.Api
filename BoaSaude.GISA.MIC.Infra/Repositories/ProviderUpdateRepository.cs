@@ -11,15 +11,15 @@ namespace BoaSaude.GISA.MIC.Infra.Repositories
 		private readonly DbSet<ProviderUpdate> _dbProviderUpdate;
 		private readonly MicContext _micContext;
 
-		public ProviderUpdateRepository(DbSet<ProviderUpdate> dbProviderUpdate, MicContext micContext)
+		public ProviderUpdateRepository(MicContext micContext)
 		{
-			_dbProviderUpdate = dbProviderUpdate;
 			_micContext = micContext;
+			_dbProviderUpdate = _micContext.ProviderUpdate;
 		}
 
 		public IQueryable<ProviderUpdate> GetByLogin(string login)
 		{
-			return _dbProviderUpdate.Where(p => p.Login == login);
+			return _dbProviderUpdate.Where(p => p.Login == login).Include(p => p.Address);
 		}
 
 		public async Task Add(ProviderUpdate providerUpdate)
@@ -28,9 +28,10 @@ namespace BoaSaude.GISA.MIC.Infra.Repositories
 			await _micContext.SaveChangesAsync();
 		}
 
-		public void Update(ProviderUpdate providerUpdate)
+		public async Task Update(ProviderUpdate providerUpdate)
 		{
 			_dbProviderUpdate.Update(providerUpdate);
+			await _micContext.SaveChangesAsync();
 		}
 	}
 }

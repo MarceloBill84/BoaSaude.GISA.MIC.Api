@@ -8,6 +8,6 @@ namespace BoaSaude.GISA.MIC.Domain.Repositories
 	{
 		IQueryable<ProviderUpdate> GetByLogin(string login);
 		Task Add(ProviderUpdate providerUpdate);
-		void Update(ProviderUpdate providerUpdate);
+		Task Update(ProviderUpdate providerUpdate);
 	}
 }
