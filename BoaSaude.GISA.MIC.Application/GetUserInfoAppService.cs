@@ -21,7 +21,7 @@ namespace BoaSaude.GISA.MIC.Application
 			return new()
 			{
 				Name = model.Name,
-				CompanyName = model.Company
+				CompanyName = model.CompanyName
 			};
 		}
 	}

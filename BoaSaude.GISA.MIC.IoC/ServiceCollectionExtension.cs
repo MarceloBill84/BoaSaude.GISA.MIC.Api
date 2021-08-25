@@ -12,7 +12,9 @@ namespace BoaSaude.GISA.MIC.IoC
 		{
 			services.AddScoped<ISafRepository, SafRepository>()
 				.AddScoped<IMessageBrokerRepository, MessageBrokerRepository>()
-				.AddScoped<IProviderUpdateRepository, ProviderUpdateRepository>();
+				.AddScoped<IProviderUpdateRepository, ProviderUpdateRepository>()
+				.AddScoped<IManifestationRepository, ManifestationRepository>()
+				.AddScoped<IPortalRepository, PortalRepository>();
 
 			return services;
 		}
@@ -25,7 +27,9 @@ namespace BoaSaude.GISA.MIC.IoC
 		public static IServiceCollection RegisterAppServices(this IServiceCollection services)
 		{
 			services.AddScoped<IGetUserInfoAppService, GetUserInfoAppService>()
-				.AddScoped<IProviderUpdateAppService, ProviderUpdateAppService>();
+				.AddScoped<IProviderUpdateAppService, ProviderUpdateAppService>()
+				.AddScoped<IRegisterManifestationAppService, RegisterManifestationAppService>()
+				.AddScoped<IReportManifestationAppService, ReportManifestationAppService>();
 
 			return services;
 		}

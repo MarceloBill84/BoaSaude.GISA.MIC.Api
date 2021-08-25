@@ -8,11 +8,12 @@ namespace BoaSaude.GISA.MIC.Infra.Repositories
 	{
 		public async Task<UserInfoModel> GetUserInfo(string login)
 		{
-			return new UserInfoModel
+			return new()
 			{
 				CpfCnpj = "72617224058",
 				Name = "Marcelo J. S.",
-				Company = "Laborátorio Saúde em Dia"
+				CompanyId = 1,
+				CompanyName = "Laborátorio Saúde em Dia"
 			};
 		}
 	}

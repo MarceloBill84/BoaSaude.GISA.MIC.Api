@@ -4,6 +4,7 @@
 	{
 		public string CpfCnpj { get; set; }
 		public string Name { get; set; }
-		public string Company { get; set; }
+		public int CompanyId { get; set; }
+		public string CompanyName { get; set; }
 	}
 }

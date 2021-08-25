@@ -11,5 +11,6 @@ namespace BoaSaude.GISA.MIC.Infra
 		}
 		public DbSet<ProviderUpdate> ProviderUpdate { get; set; }
 		public DbSet<ProviderAddress> ProviderAddress { get; set; }
+		public DbSet<Manifestation> Manifestation { get; set; }
 	}
 }
