@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["BoaSaude.GISA.MIC/BoaSaude.GISA.MIC.csproj", "BoaSaude.GISA.MIC/"]
-RUN dotnet restore "BoaSaude.GISA.MIC/BoaSaude.GISA.MIC.csproj"
+COPY ["BoaSaude.GISA.MIC.Api/BoaSaude.GISA.MIC.Api.csproj", "BoaSaude.GISA.MIC.Api/"]
+RUN dotnet restore "BoaSaude.GISA.MIC.Api/BoaSaude.GISA.MIC.Api.csproj"
 COPY . .
 WORKDIR "/src/BoaSaude.GISA.MIC"
-RUN dotnet build "BoaSaude.GISA.MIC.csproj" -c Release -o /app/build
+RUN dotnet build "BoaSaude.GISA.MIC.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BoaSaude.GISA.MIC.csproj" -c Release -o /app/publish
+RUN dotnet publish "BoaSaude.GISA.MIC.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BoaSaude.GISA.MIC.dll"]
+ENTRYPOINT ["dotnet", "BoaSaude.GISA.MIC.Api.dll"]

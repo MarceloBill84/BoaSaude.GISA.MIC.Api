@@ -4,7 +4,8 @@
 	{
 		public static class TopicName
 		{
-			public const string TopicProviderUpdate = "topic-provider-update";
+			public const string ProviderUpdate = "topic-provider-update";
+			public const string ManifestationRegister = "topic-manifestation-register";
 		}
 	}
 }

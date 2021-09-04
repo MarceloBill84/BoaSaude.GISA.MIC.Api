@@ -1,5 +1,6 @@
 ﻿using BoaSaude.GISA.MIC.Application.Interfaces;
 using BoaSaude.GISA.MIC.Application.ViewModels;
+using BoaSaude.GISA.MIC.CrossCutting.Extensions;
 using BoaSaude.GISA.MIC.Domain.Repositories;
 using System;
 using System.Globalization;
@@ -36,7 +37,7 @@ namespace BoaSaude.GISA.MIC.Application
 
 			while (beginDate <= endDate)
 			{
-				report.Months.Add(beginDate.ToString(@"MMMM", new CultureInfo("PT-pt")));
+				report.Months.Add(beginDate.ToString(@"MMMM", new CultureInfo("PT-pt")).FirstCharToUpper());
 
 				var attendanceReport = attendance.Where(p => p.Date.Month == beginDate.Month && p.Date.Year == beginDate.Year).ToList();
 				report.Attendances.Add(attendanceReport.Count);

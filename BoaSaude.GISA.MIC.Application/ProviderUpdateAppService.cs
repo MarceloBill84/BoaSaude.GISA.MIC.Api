@@ -89,7 +89,7 @@ namespace BoaSaude.GISA.MIC.Application
 				providerUpdateViewModel.Documents
 			};
 
-			_messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.TopicProviderUpdate);
+			_messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.ProviderUpdate);
 		}
 	}
 }
