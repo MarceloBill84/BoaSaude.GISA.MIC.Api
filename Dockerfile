@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["BoaSaude.GISA.MIC.Api/BoaSaude.GISA.MIC.Api.csproj", "BoaSaude.GISA.MIC.Api/"]
 RUN dotnet restore "BoaSaude.GISA.MIC.Api/BoaSaude.GISA.MIC.Api.csproj"
 COPY . .
-WORKDIR "/src/BoaSaude.GISA.MIC"
+WORKDIR "/src/BoaSaude.GISA.MIC.Api"
 RUN dotnet build "BoaSaude.GISA.MIC.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
