@@ -10,86 +10,86 @@ using System.Threading.Tasks;
 
 namespace BoaSaude.GISA.MIC.Application
 {
-	public class ProviderUpdateAppService : IProviderUpdateAppService
-	{
-		private readonly ISafRepository _safRepository;
-		private readonly IMessageBrokerRepository _messageBrokerRepository;
-		private readonly IProviderUpdateRepository _providerUpdateRepository;
+    public class ProviderUpdateAppService : IProviderUpdateAppService
+    {
+        private readonly ISafRepository _safRepository;
+        private readonly IMessageBrokerRepository _messageBrokerRepository;
+        private readonly IProviderUpdateRepository _providerUpdateRepository;
 
-		public ProviderUpdateAppService(IMessageBrokerRepository messageBrokerRepository,
-			ISafRepository safRepository,
-			IProviderUpdateRepository providerUpdateRepository)
-		{
-			_messageBrokerRepository = messageBrokerRepository;
-			_safRepository = safRepository;
-			_providerUpdateRepository = providerUpdateRepository;
-		}
+        public ProviderUpdateAppService(IMessageBrokerRepository messageBrokerRepository,
+            ISafRepository safRepository,
+            IProviderUpdateRepository providerUpdateRepository)
+        {
+            _messageBrokerRepository = messageBrokerRepository;
+            _safRepository = safRepository;
+            _providerUpdateRepository = providerUpdateRepository;
+        }
 
-		public async Task Execute(ProviderUpdateViewModel providerUpdateViewModel)
-		{
-			var userInfo = await _safRepository.GetUserInfo(providerUpdateViewModel.Login);
+        public async Task Execute(ProviderUpdateViewModel providerUpdateViewModel)
+        {
+            var userInfo = await _safRepository.GetUserInfo(providerUpdateViewModel.Login);
 
-			await SetProviderInfo(providerUpdateViewModel);
+            await SetProviderInfo(providerUpdateViewModel);
 
-			NotifyProviderUpdate(providerUpdateViewModel, userInfo);
-		}
+            await NotifyProviderUpdate(providerUpdateViewModel, userInfo);
+        }
 
-		private async Task SetProviderInfo(ProviderUpdateViewModel providerUpdateViewModel)
-		{
-			var providerUpdate = _providerUpdateRepository.GetByLogin(providerUpdateViewModel.Login)
-							.OrderBy(p => p.CreationDate)
-							.LastOrDefault();
+        private async Task SetProviderInfo(ProviderUpdateViewModel providerUpdateViewModel)
+        {
+            var providerUpdate = _providerUpdateRepository.GetByLogin(providerUpdateViewModel.Login)
+                            .OrderBy(p => p.CreationDate)
+                            .LastOrDefault();
 
-			if (providerUpdate is null)
-			{
-				providerUpdate = new()
-				{
-					CreationDate = DateTime.UtcNow,
-					Email = providerUpdateViewModel.Email,
-					Login = providerUpdateViewModel.Login,
-					Phone = providerUpdateViewModel.Phone,
-					Status = ProviderUpdateStatusEnum.Pending,
-					Address = new()
-					{
-						City = providerUpdateViewModel.Address.City,
-						Number = providerUpdateViewModel.Address.Number,
-						State = providerUpdateViewModel.Address.State,
-						Street = providerUpdateViewModel.Address.Street,
-						ZipCode = providerUpdateViewModel.Address.ZipCode
-					}
-				};
+            if (providerUpdate is null)
+            {
+                providerUpdate = new()
+                {
+                    CreationDate = DateTime.UtcNow,
+                    Email = providerUpdateViewModel.Email,
+                    Login = providerUpdateViewModel.Login,
+                    Phone = providerUpdateViewModel.Phone,
+                    Status = ProviderUpdateStatusEnum.Pending,
+                    Address = new()
+                    {
+                        City = providerUpdateViewModel.Address.City,
+                        Number = providerUpdateViewModel.Address.Number,
+                        State = providerUpdateViewModel.Address.State,
+                        Street = providerUpdateViewModel.Address.Street,
+                        ZipCode = providerUpdateViewModel.Address.ZipCode
+                    }
+                };
 
-				await _providerUpdateRepository.Add(providerUpdate);
-			}
-			else
-			{
-				providerUpdate.ValidateAllowModification();
+                await _providerUpdateRepository.Add(providerUpdate);
+            }
+            else
+            {
+                providerUpdate.ValidateAllowModification();
 
-				providerUpdate.Email = providerUpdateViewModel.Email;
-				providerUpdate.Login = providerUpdateViewModel.Login;
-				providerUpdate.Phone = providerUpdateViewModel.Phone;
-				providerUpdate.Address.City = providerUpdateViewModel.Address.City;
-				providerUpdate.Address.Number = providerUpdateViewModel.Address.Number;
-				providerUpdate.Address.State = providerUpdateViewModel.Address.State;
-				providerUpdate.Address.Street = providerUpdateViewModel.Address.Street;
-				providerUpdate.Address.ZipCode = providerUpdateViewModel.Address.ZipCode;
+                providerUpdate.Email = providerUpdateViewModel.Email;
+                providerUpdate.Login = providerUpdateViewModel.Login;
+                providerUpdate.Phone = providerUpdateViewModel.Phone;
+                providerUpdate.Address.City = providerUpdateViewModel.Address.City;
+                providerUpdate.Address.Number = providerUpdateViewModel.Address.Number;
+                providerUpdate.Address.State = providerUpdateViewModel.Address.State;
+                providerUpdate.Address.Street = providerUpdateViewModel.Address.Street;
+                providerUpdate.Address.ZipCode = providerUpdateViewModel.Address.ZipCode;
 
-				await _providerUpdateRepository.Update(providerUpdate);
-			}
-		}
+                await _providerUpdateRepository.Update(providerUpdate);
+            }
+        }
 
-		private void NotifyProviderUpdate(ProviderUpdateViewModel providerUpdateViewModel, UserInfoModel userInfo)
-		{
-			var message = new
-			{
-				userInfo.CpfCnpj,
-				providerUpdateViewModel.Phone,
-				providerUpdateViewModel.Email,
-				providerUpdateViewModel.Address,
-				providerUpdateViewModel.Documents
-			};
+        private async Task NotifyProviderUpdate(ProviderUpdateViewModel providerUpdateViewModel, UserInfoModel userInfo)
+        {
+            var message = new
+            {
+                userInfo.CpfCnpj,
+                providerUpdateViewModel.Phone,
+                providerUpdateViewModel.Email,
+                providerUpdateViewModel.Address,
+                providerUpdateViewModel.Documents
+            };
 
-			_messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.ProviderUpdate);
-		}
-	}
+            await _messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.ProviderUpdate);
+        }
+    }
 }

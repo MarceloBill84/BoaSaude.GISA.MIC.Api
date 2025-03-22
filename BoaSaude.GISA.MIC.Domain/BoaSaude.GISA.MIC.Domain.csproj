@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\BoaSaude.GISA.MIC.CrossCutting\BoaSaude.GISA.MIC.CrossCutting.csproj" />
   </ItemGroup>
-
 </Project>

@@ -8,45 +8,45 @@ using System.Threading.Tasks;
 
 namespace BoaSaude.GISA.MIC.Application
 {
-	public class RegisterManifestationAppService : IRegisterManifestationAppService
-	{
-		private readonly IManifestationRepository _manifestationRepository;
-		private readonly IMessageBrokerRepository _messageBrokerRepository;
+    public class RegisterManifestationAppService : IRegisterManifestationAppService
+    {
+        private readonly IManifestationRepository _manifestationRepository;
+        private readonly IMessageBrokerRepository _messageBrokerRepository;
 
-		public RegisterManifestationAppService(IManifestationRepository manifestationRepository,
-			IMessageBrokerRepository messageBrokerRepository)
-		{
-			_manifestationRepository = manifestationRepository;
-			_messageBrokerRepository = messageBrokerRepository;
-		}
+        public RegisterManifestationAppService(IManifestationRepository manifestationRepository,
+            IMessageBrokerRepository messageBrokerRepository)
+        {
+            _manifestationRepository = manifestationRepository;
+            _messageBrokerRepository = messageBrokerRepository;
+        }
 
-		public async Task Execute(RegisterManifestationViewModel registerManifestationViewModel)
-		{
-			var manifestation = new Manifestation
-			{
-				AttendanceId = registerManifestationViewModel.AttendanceId,
-				CreationDate = DateTime.UtcNow,
-				Description = registerManifestationViewModel.Description,
-				Login = registerManifestationViewModel.Login,
-				Type = registerManifestationViewModel.Type
-			};
+        public async Task Execute(RegisterManifestationViewModel registerManifestationViewModel)
+        {
+            var manifestation = new Manifestation
+            {
+                AttendanceId = registerManifestationViewModel.AttendanceId,
+                CreationDate = DateTime.UtcNow,
+                Description = registerManifestationViewModel.Description,
+                Login = registerManifestationViewModel.Login,
+                Type = registerManifestationViewModel.Type
+            };
 
-			await _manifestationRepository.Add(manifestation);
+            await _manifestationRepository.Add(manifestation);
 
-			NotifyManifestationRegister(registerManifestationViewModel, manifestation);
-		}
+            await NotifyManifestationRegister(registerManifestationViewModel, manifestation);
+        }
 
-		private void NotifyManifestationRegister(RegisterManifestationViewModel registerManifestationViewModel, Manifestation manifestation)
-		{
-			var message = new
-			{
-				registerManifestationViewModel.Login,
-				registerManifestationViewModel.AttendanceId,
-				manifestationId = manifestation.Id,
-				manifestation.CreationDate
-			};
+        private async Task NotifyManifestationRegister(RegisterManifestationViewModel registerManifestationViewModel, Manifestation manifestation)
+        {
+            var message = new
+            {
+                registerManifestationViewModel.Login,
+                registerManifestationViewModel.AttendanceId,
+                manifestationId = manifestation.Id,
+                manifestation.CreationDate
+            };
 
-			_messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.ManifestationRegister);
-		}
-	}
+            await _messageBrokerRepository.PostTopicMessage(message, Constants.TopicName.ManifestationRegister);
+        }
+    }
 }

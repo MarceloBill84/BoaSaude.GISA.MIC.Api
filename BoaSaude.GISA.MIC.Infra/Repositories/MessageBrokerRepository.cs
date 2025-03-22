@@ -3,62 +3,59 @@ using BoaSaude.GISA.MIC.Domain.Repositories;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BoaSaude.GISA.MIC.Infra.Repositories
 {
-	public class MessageBrokerRepository : IMessageBrokerRepository
-	{
-		private readonly ApplicationConfig _applicationConfig;
+    public class MessageBrokerRepository : IMessageBrokerRepository
+    {
+        private readonly ApplicationConfig _applicationConfig;
 
-		public MessageBrokerRepository(ApplicationConfig applicationConfig)
-		{
-			_applicationConfig = applicationConfig;
-		}
+        public MessageBrokerRepository(ApplicationConfig applicationConfig)
+        {
+            _applicationConfig = applicationConfig;
+        }
 
-		public void PostQueueMessage(object message, string queueName)
-		{
-			var channel = GetChannel();
-			var messageProperties = GetMessageProperties(channel);
-			var body = ConvertMessage(message);
+        public async Task PostQueueMessage(object message, string queueName)
+        {
+            var channel = await GetChannel();
 
-			channel.BasicPublish(exchange: string.Empty, routingKey: queueName, basicProperties: messageProperties, body: body);
-		}
+            await channel.QueueDeclareAsync(queueName);
 
-		public void PostTopicMessage(object message, string topicName)
-		{
-			var channel = GetChannel();
-			var messageProperties = GetMessageProperties(channel);
-			var body = ConvertMessage(message);
+            var body = ConvertMessage(message);
 
-			channel.BasicPublish(exchange: topicName, routingKey: string.Empty, basicProperties: messageProperties, body: body);
-		}
+            await channel.BasicPublishAsync(exchange: string.Empty, routingKey: queueName, body: body);
+        }
 
-		private static byte[] ConvertMessage(object message)
-		{
-			var json = JsonConvert.SerializeObject(message);
-			return Encoding.Default.GetBytes(json);
-		}
+        public async Task PostTopicMessage(object message, string topicName)
+        {
+            var channel = await GetChannel();
 
-		private IModel GetChannel()
-		{
-			var factory = new ConnectionFactory()
-			{
-				HostName = _applicationConfig.MessageBrokerConfig.HostName,
-				UserName = _applicationConfig.MessageBrokerConfig.UserName,
-				Password = _applicationConfig.MessageBrokerConfig.Password,
-			};
+            await channel.ExchangeDeclareAsync(topicName, ExchangeType.Topic);
 
-			IConnection connection = factory.CreateConnection();
+            var body = ConvertMessage(message);
 
-			return connection.CreateModel();
-		}
+            await channel.BasicPublishAsync(exchange: topicName, routingKey: string.Empty, body: body);
+        }
 
-		private IBasicProperties GetMessageProperties(IModel channel)
-		{
-			var messageProperties = channel.CreateBasicProperties();
-			messageProperties.Persistent = true;
+        private static byte[] ConvertMessage(object message)
+        {
+            var json = JsonConvert.SerializeObject(message);
+            return Encoding.Default.GetBytes(json);
+        }
 
-			return messageProperties;
-		}
-	}
+        private async Task<IChannel> GetChannel()
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = _applicationConfig.MessageBrokerConfig.HostName,
+                UserName = _applicationConfig.MessageBrokerConfig.UserName,
+                Password = _applicationConfig.MessageBrokerConfig.Password,
+            };
+
+            IConnection connection = await factory.CreateConnectionAsync();
+
+            return await connection.CreateChannelAsync();
+        }
+    }
 }
